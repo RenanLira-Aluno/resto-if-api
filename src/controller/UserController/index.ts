@@ -5,6 +5,7 @@ export class UserController {
 
 
     async login(res: Response, req: Request) {
+        console.log(req.body)
         const {username, password} = req.body
 
         const token = await axios.post("https://suap.ifpi.edu.br/api/v2/autenticacao/token/", {username, password})

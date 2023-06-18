@@ -6,6 +6,6 @@ const router = Router()
 
 
 // minhas rotas aqui
-router.use('auth', userRouter)
+router.use('/auth', userRouter)
 
 export default router
