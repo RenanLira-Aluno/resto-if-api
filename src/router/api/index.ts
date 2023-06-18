@@ -1,10 +1,11 @@
 import { Router } from "express";
+import { userRouter } from "./userRoutes";
 
-import helloRouter from './helloRouter'
+
 const router = Router()
 
 
 // minhas rotas aqui
-router.use('/hello', helloRouter)
+router.use('auth', userRouter)
 
 export default router
