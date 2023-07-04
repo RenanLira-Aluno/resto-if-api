@@ -5,7 +5,7 @@ import { Cardapio } from "./entity/Cardapio";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
+    host: "168.75.103.246",
     port: 5432,
     username: "root",
     password: "root",

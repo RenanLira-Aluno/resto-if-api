@@ -14,9 +14,9 @@ app.use('/api/v1', router)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 AppDataSource.initialize()
     .then(async () => {
-        
+
     })
-    .catch((error) => console.log(error))
+    .catch((error: any) => console.log(error))
 
 
 app.listen('3000', () => {
