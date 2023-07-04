@@ -4,17 +4,43 @@ import { RefeicaoDiaRepository } from "../../db/repository/RefeicaoRepository";
 
 export class RefeicaoDiaController {
 
-    cardapioRepo = new RefeicaoDiaRepository()
+    refeicaoRepo = new RefeicaoDiaRepository()
 
     constructor(){}
 
      getCardapiosDaSemana = async (req: Request, res: Response ) => {
-        const response = await this.cardapioRepo.getCardapioDaSemana()
+        const response = await this.refeicaoRepo.getCardapioDaSemana()
 
         res.json(response)
     }
 
+    criarRefeicaoDia = async (req: Request, res: Response) => {
+        const {idCardapioAlmoco, idCardapioJanta, dia} = req.body
 
+        const result = await this.refeicaoRepo.criarRefeicaoDia(new Date(dia), idCardapioAlmoco, idCardapioJanta)
+
+
+        res.json(result)
+    }
+
+    removerRefeicaoDia = async (req: Request, res: Response) => {
+        try {
+            const {id} = req.body
+            const result = await this.refeicaoRepo.deletarRefeicaoDia(id)
+
+            if (result) {
+                res.json({"message": "refeicao deletada"})
+            }
+
+        } catch (error: any) {
+
+            res.status(400).json({"message": error.message})
+        }
+
+
+
+
+    }
 
 
 

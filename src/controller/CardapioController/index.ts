@@ -13,7 +13,16 @@ export class CardapioController {
         res.json(response)
     }
 
-    
+    criarCardapio = async (req: Request, res: Response ) => {
+
+        const {desc} = req.body
+
+        const response = await this.cardapioRepo.criarCardapio(desc)
+
+        res.json(response)
+    }
+
+
 
 
 

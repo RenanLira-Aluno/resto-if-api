@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 export class RefeicaoDiaRepository {
 
     refeicaoRepo = AppDataSource.getRepository(RefeicoesDoDia)
+    cardapioRepo = AppDataSource.getRepository(Cardapio)
 
 
     async getCardapioDaSemana() {
@@ -29,6 +30,35 @@ export class RefeicaoDiaRepository {
 
         return result
 
+
+    }
+
+    async deletarRefeicaoDia(id: string) {
+        const refeicao = await this.refeicaoRepo.findOneBy({id})
+
+        if (!refeicao) {
+            throw new Error('RefeicaoDia não existe')
+        }
+
+        await this.refeicaoRepo.delete({id: refeicao?.id})
+
+        return true
+    }
+
+    async criarRefeicaoDia(dia: Date, idCardapioA: string, idCardapioJ: string) {
+
+        const refeicao = new RefeicoesDoDia()
+
+        let cardapioA = await this.cardapioRepo.findOne({where: {id: idCardapioA}})
+        let cardapioJ = await this.cardapioRepo.findOne({where: {id: idCardapioJ}})
+
+        refeicao.almoco = cardapioA || undefined
+        refeicao.jantar = cardapioJ || undefined
+        refeicao.dia = dia
+
+        const result = await this.refeicaoRepo.save(refeicao)
+
+        return refeicao
 
     }
 

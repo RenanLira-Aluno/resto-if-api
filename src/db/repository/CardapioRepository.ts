@@ -4,7 +4,7 @@ import { Cardapio } from "../entity/Cardapio";
 export class CardapioRepository {
 
     cardapioRepo = AppDataSource.getRepository(Cardapio)
-    
+
 
     async getAllCardapios() {
 
@@ -12,6 +12,18 @@ export class CardapioRepository {
 
         return result
 
+
+    }
+
+    async criarCardapio(desc: string) {
+
+        const cardapio = new Cardapio()
+
+        cardapio.descricao = desc
+
+        const result = await this.cardapioRepo.save(cardapio)
+
+        return result
 
     }
 

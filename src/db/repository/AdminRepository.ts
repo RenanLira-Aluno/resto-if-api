@@ -7,8 +7,7 @@ import { RefeicoesDoDia } from "../entity/RefeicoesDoDia";
 
 export class AdminRepo {
     adminRepo = AppDataSource.getRepository(Admin)
-    refeicaoRepo = AppDataSource.getRepository(RefeicoesDoDia)
-    cardapioRepo = AppDataSource.getRepository(Cardapio)
+
 
     async criarAdmin(name: string, email:string, password: string) {
 
@@ -17,51 +16,25 @@ export class AdminRepo {
         newAdmin.password = password
         newAdmin.name = name
 
-        const result = this.adminRepo.save(newAdmin)
+        const result = await this.adminRepo.save(newAdmin)
 
         return result
 
     }
 
-    async criarCardapio(desc: string) {
+    async getAdmin(username: string, password: string ) {
 
-        const cardapio = new Cardapio()
+        const admin = await this.adminRepo.findOne({where: {email: username}})
 
-        cardapio.descricao = desc
-
-        const result = await this.cardapioRepo.save(cardapio)
-
-        return result
-
-    }
-
-    async deletarRefeicaoDia(id: string) {
-        const refeicao = await this.refeicaoRepo.findOneBy({id})
-
-        if (!refeicao) {
-            throw new Error('RefeicaoDia não existe')
+        if (!admin || admin.password != password) {
+            throw new Error('credenciais invalidas')
         }
 
-        await this.refeicaoRepo.delete({id: refeicao?.id})
-
-        return true
-    }
-
-    async criarRefeicaoDia(dia: Date, idCardapioA: string, idCardapioJ: string) {
-
-        const refeicao = new RefeicoesDoDia()
-
-        let cardapioA = await this.cardapioRepo.findOne({where: {id: idCardapioA}})
-        let cardapioJ = await this.cardapioRepo.findOne({where: {id: idCardapioJ}})
-
-        refeicao.almoco = cardapioA || undefined
-        refeicao.jantar = cardapioJ || undefined
-        refeicao.dia = dia
-
-        const result = await this.refeicaoRepo.save(refeicao)
-
-        return refeicao
+        return admin
 
     }
+
+
+
 
 }

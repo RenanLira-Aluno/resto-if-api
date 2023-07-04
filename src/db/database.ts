@@ -1,5 +1,6 @@
-import { Admin, DataSource } from "typeorm";
+import { DataSource } from "typeorm";
 import { Aluno } from "./entity/Aluno";
+import { Admin } from "./entity/Admin";
 import { RefeicoesDoDia } from "./entity/RefeicoesDoDia";
 import { Cardapio } from "./entity/Cardapio";
 
