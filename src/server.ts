@@ -1,8 +1,9 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import router from './router/api';
 import bodyParser from 'body-parser';
 import "reflect-metadata"
 import { AppDataSource } from './db/database';
+import dayjs from 'dayjs';
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const app = express()
@@ -18,6 +19,15 @@ AppDataSource.initialize()
     })
     .catch((error: any) => console.log(error))
 
+
+app.get('/test', (req: Request, res: Response) => {
+
+    const comecoSemana = dayjs().startOf('week')
+    const fimSemana = dayjs().endOf('week')
+
+
+    res.json({comecoSemana, fimSemana})
+})
 
 app.listen('3000', () => {
     console.log('server running')
