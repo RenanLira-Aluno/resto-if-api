@@ -37,9 +37,12 @@ export class RefeicaoDiaController {
             res.status(400).json({"message": error.message})
         }
 
+    }
 
+    verRefeicoesDoDia = async (req: Request, res: Response ) => {
+        const refeicaoDia = await this.refeicaoRepo.getRefeicoesDia()
 
-
+        res.json({"refeicao": refeicaoDia})
     }
 
 

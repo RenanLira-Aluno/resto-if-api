@@ -1,13 +1,15 @@
 
+import dayjs from "dayjs";
 import { AppDataSource } from "../database";
 import { Admin } from "../entity/Admin";
 import { Cardapio } from "../entity/Cardapio";
+import { PresencasConfirmadas } from "../entity/PresencasConfirmadas";
 import { RefeicoesDoDia } from "../entity/RefeicoesDoDia";
 
 
 export class AdminRepo {
     adminRepo = AppDataSource.getRepository(Admin)
-
+    presencaRepo = AppDataSource.getRepository(PresencasConfirmadas)
 
     async criarAdmin(name: string, email:string, password: string) {
 
@@ -31,6 +33,19 @@ export class AdminRepo {
         }
 
         return admin
+
+    }
+
+    async totalPresencaConfirmadas(horario: string) {
+
+        const presencas = await this.presencaRepo.findAndCount({
+            where: {
+                dia: new Date(dayjs().format('YYYY-MM-DD')),
+                horario
+            }
+        })
+
+        return presencas[1]
 
     }
 

@@ -14,26 +14,33 @@ export class UserController {
 
         try {
             const response = await this.alunoRepo.getAluno(username, password)
-            
+
             res.json(response)
 
         } catch (error: any) {
             res.json({"error": error.message})
         }
 
+    }
 
+    confirmarPresenca = async (req: Request, res: Response) => {
+        const {horario, alunoId} = req.body
+
+
+        try {
+            const response = await this.alunoRepo.confirmarPresenca(alunoId, horario)
+
+            res.json(response)
+
+        } catch (error: any) {
+            res.status(400).json({"error": error.message})
+        }
 
     }
 
-    verRefeicoesDoDia = async (req: Request, res: Response ) => {
-        const refeicaoDia = await this.alunoRepo.getRefeicoesDia()
-
-        res.json({"refeicao": refeicaoDia})
-    }
 
 
 
-    
 
 
 

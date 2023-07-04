@@ -45,7 +45,19 @@ export class RefeicaoDiaRepository {
         return true
     }
 
+    async getRefeicoesDia() {
+
+        const refeicao = await this.refeicaoRepo.findOneBy({dia: new Date() })
+
+
+        return refeicao
+    }
+
     async criarRefeicaoDia(dia: Date, idCardapioA: string, idCardapioJ: string) {
+
+        const verifyrefeicao = await this.refeicaoRepo.findOne({where: {dia}})
+
+        if (verifyrefeicao) throw new Error('Refeicao do dia já cadastrada')
 
         const refeicao = new RefeicoesDoDia()
 

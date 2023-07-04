@@ -2,11 +2,13 @@ import axios from "axios";
 import { AppDataSource } from "../database";
 import { Aluno } from "../entity/Aluno";
 import { RefeicoesDoDia } from "../entity/RefeicoesDoDia";
+import { PresencasConfirmadas } from "../entity/PresencasConfirmadas";
+import dayjs from "dayjs";
 
 export class AlunoRepo {
 
     repo = AppDataSource.getRepository(Aluno)
-    refeicaoRepo = AppDataSource.getRepository(RefeicoesDoDia)
+    presencaRepo = AppDataSource.getRepository(PresencasConfirmadas)
 
     constructor(){}
 
@@ -43,12 +45,40 @@ export class AlunoRepo {
 
     }
 
-    async getRefeicoesDia() {
-        
-        const refeicao = await this.refeicaoRepo.findOneBy({dia: new Date() })
-        
 
-        return refeicao
+
+    async confirmarPresenca(alunoid: string, horario: string) {
+
+
+
+        const presenca = await this.presencaRepo.find({
+            where: {
+                aluno: {id: alunoid},
+                horario,
+                dia: new Date(dayjs().format('YYYY-MM-DD'))
+            }
+        })
+
+        console.log(presenca)
+
+
+        if (presenca.length != 0) {
+            throw new Error('Presenca já confirmada')
+        }
+
+        const novaPresenca = new PresencasConfirmadas()
+        const aluno = await this.repo.findOne({where: {id: alunoid}})
+
+        if (aluno) {
+            novaPresenca.aluno = aluno
+            novaPresenca.dia = new Date(dayjs().format('YYYY-MM-DD'))
+            novaPresenca.horario = horario
+
+            const result = await this.presencaRepo.save(novaPresenca)
+
+            return result
+        }
+
     }
 
 }

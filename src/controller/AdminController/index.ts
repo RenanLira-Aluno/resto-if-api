@@ -23,7 +23,14 @@ export class AdminController {
     }
 
 
+    totalPresencas = async (req: Request, res: Response) => {
 
+        const {horario} = req.body
+
+        const response = await this.adminRepo.totalPresencaConfirmadas(horario)
+
+        res.json({"total_presenca": response})
+    }
 
 
 

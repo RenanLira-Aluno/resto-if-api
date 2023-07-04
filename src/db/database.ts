@@ -3,6 +3,7 @@ import { Aluno } from "./entity/Aluno";
 import { Admin } from "./entity/Admin";
 import { RefeicoesDoDia } from "./entity/RefeicoesDoDia";
 import { Cardapio } from "./entity/Cardapio";
+import { PresencasConfirmadas } from "./entity/PresencasConfirmadas";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
     database: "restoifdb",
     synchronize: true,
     logging: true,
-    entities: [Admin, Aluno, RefeicoesDoDia, Cardapio],
+    entities: [Admin, Aluno, RefeicoesDoDia, Cardapio, PresencasConfirmadas],
     subscribers: [],
     migrations: [],
 })
