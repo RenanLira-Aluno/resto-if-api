@@ -28,6 +28,25 @@ export class AdminController {
         res.json(result)
     }
 
+    removerRefeicaoDia = async (req: Request, res: Response) => {
+        try {
+            const {id} = req.body
+            const result = await this.adminRepo.deletarRefeicaoDia(id)
+
+            if (result) {
+                res.json({"message": "refeicao deletada"})
+            }
+
+        } catch (error: any) {
+
+            res.status(400).json({"message": error.message})
+        }
+
+
+
+
+    }
+
     novoAdmin = async (req: Request, res: Response) => {
 
         const {name, email, password} = req.body
@@ -37,9 +56,9 @@ export class AdminController {
         res.json(response)
     }
 
-     
 
-    
+
+
 
 
 

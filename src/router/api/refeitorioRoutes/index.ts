@@ -14,6 +14,7 @@ const refeitorioRouter = Router()
 refeitorioRouter.get('/cardapioDoDia', userController.verRefeicoesDoDia)
 refeitorioRouter.post('/criarRefeicaoDoDia', adminController.criarRefeicaoDia)
 refeitorioRouter.post('/criarNovoCardapio', adminController.criarCardapio)
+refeitorioRouter.delete('/removerRefeicaoDia', adminController.removerRefeicaoDia)
 refeitorioRouter.get('/cardapios', cardapioController.allCardapios)
 refeitorioRouter.get('/cardapioSemanal', refeicaoDiaController.getCardapiosDaSemana)
 
